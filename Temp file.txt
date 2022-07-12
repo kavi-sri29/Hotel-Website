@@ -1,0 +1,17 @@
+config.i18n.en = {
+'account.unlock.email.or.username.placeholder': "Email",
+'account.unlock.email.or.username.tooltip': "Email",
+'forgotpassword': "Forgot password?",
+'help': "Need help signing in?",
+'mfa.challenge.password.placeholder': "Password",
+'needhelp': "Need help signing in?",
+'password.forgot.email.or.username.placeholder': "Email",
+'password.forgot.email.or.username.tooltip': "Email",
+'primaryauth.password.placeholder': "Password",
+'primaryauth.title': "Login To SupportHub",
+'primaryauth.username.placeholder': "Email",
+'unlockaccount': "Unlock account?",
+'primaryauth.title': 'Welcome to Okta',
+'error.username.required' : 'Please enter a username',
+'error.password.required' : 'Please enter a password', 
+}
