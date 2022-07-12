@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="none" />
+
+    <title>{{pageTitle}}</title>
+    {{{SignInWidgetResources}}}
+
+<link rel="icon" href="https://ns-keygen.stryker.com/favicon.ico">	
+	<style>
+		.top-banner {
+          background-color: #ffb500;
+          padding: 55px 0px;
+          text-align: center;
+          }
+		.top-banner img{
+          width: 200px;
+          margin: 0px auto;
+          }
+        #okta-sign-in.auth-container .button-primary {
+          color: #000;
+          background: #ffb500 !important;
+          border: none;             
+        }
+		#okta-sign-in.auth-container .button-primary:hover, #okta-sign-in.auth-container .button-primary:active {
+          color: #fff;
+          background: #af6d04 ;
+          border: none;             
+        }
+		#okta-sign-in .registration-container .registration-link {
+    		color: #1c5687;
+		}
+		
+		#okta-sign-in.auth-container h2 {
+    		font-weight: 600;
+    		color: #1d1d21;                  
+		}
+		
+#okta-sign-in.auth-container.main-container {
+    position: relative;
+    top: -125px;
+              }
+	</style>
+	<script>
+	document.title = document.title.replace("stryker", "Stryker");
+	</script>
+</head>
+<body>
+    <div class="login-bg-image" style="background-image: {{bgImageUrl}}"></div>
+<div>    
+<table style="width:100%">
+<tr>
+<th>
+<div class="top-banner"><img src="https://stryker-build64.adobecqms.net/is/image//content/dam/stryker/global/StrykerLogo1.jpg"></div>
+</th>
+</tr>
+</table>
+<div id="okta-login-container"></div>
+
+    <!--
+        "OktaUtil" defines a global OktaUtil object
+        that contains methods used to complete the Okta login flow.
+     -->
+    {{{OktaUtil}}}
+
+    <script type="text/javascript">
+        // "config" object contains default widget configuration
+        // with any custom overrides defined in your admin settings.
+        var config = OktaUtil.getSignInWidgetConfig();
+
+///////////////////////////////////////////
+//https://github.com/okta/okta-signin-widget	
+//THIS MAY BREAK INBOUND FEDERATION RULES. DON’T ADD WITHOUT THOROUGH TESTING. LOGIN USING DEFAUT URL IF IT DOES BREAK
+		config.transformUsername = function (username, operation) {          
+          return username;
+        }
+
+config.i18n = {
+   'en': {
+    'errors.E0000034' : "You're not allowed to change your password, please contact your organiztion local heldesk!",
+    'errors.E0000006' : "You're not allowed to change your password, please contact your organiztion local heldesk!"
+  }
+}
+
+///////////////////////////////////////////
+
+        // Render the Okta Sign-In Widget
+        var oktaSignIn = new OktaSignIn(config);
+        oktaSignIn.renderEl({ el: '#okta-login-container' },
+            OktaUtil.completeLogin,
+            function(error) {
+                // Logs errors that occur when configuring the widget.
+                // Remove or replace this with your own custom error handler.
+                console.log(error.message, error);
+            }
+        );
+
+///////////////////////////////
+oktaSignIn.on('afterError', function (context, error) {
+    console.log(context.controller);
+    // reset-password
+
+    console.log(error.name);
+    // AuthApiError
+
+    console.log(error.message);
+    // The password does not meet the complexity requirements
+    // of the current password policy.
+
+    console.log(error.statusCode);
+    // 403
+    
+    if(context.controller == "forgot-password" && error.statusCode == 403){
+      if(document.getElementById("account-recovery-username").value.toLowerCase().endsWith("@stryker.com")){
+        	alert("SYK PASSWORD CAN'T BE CHANGED HERE!");
+        }
+      }
+    
+});
+///////////////////////////////
+
+    </script>
+</div>
+</body>
+</html>
