@@ -1,0 +1,927 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="none" />
+
+
+  <script
+  src="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/5.0.0/js/okta-sign-in.min.js"
+  type="text/javascript">
+  </script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <!--
+  <script src="https://myaccount-uat.motorolasolutions.com/euri/js/okta-sign-in.min.js"
+  type="text/javascript">
+</script> -->
+<link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/5.0.0/css/okta-sign-in.min.css"
+type="text/css"
+rel="stylesheet" />
+<link rel='shortcut icon' type='image/x-icon' href='https://myaccount-uat.motorolasolutions.com/euri/img/insignia.png' />
+<style>
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.ms-logo {
+float: left;
+  padding-top: 10px;
+  padding-left: 10%;
+  height: 40px;
+}
+.header-link-group{
+    font-family: Arial Narrow, sans-serif;
+    font-size: 15px;
+    font-style:normal;
+    padding-top:10px;
+}
+.header-non-link{
+	font-family: Arial Narrow, sans-serif;
+    font-size: 15px;
+    font-style:normal;
+    font-weight:bold;
+    margin:0px 10px 0px 0px;
+}
+#okta-sign-in .o-form-button-bar .button {
+    background: #0066cc;
+    color: #ffffff;
+    border: 0;
+    font-family: "montserrat", Arial, Helvetica, sans-serif;
+    font-size: medium;
+    cursor: pointer;
+}
+#okta-sign-in .o-form-head {
+    font-size: 16px;
+    color: black;
+    font-weight: bolder;
+}
+#okta-sign-in.no-beacon .auth-header{
+    display: none;
+}
+
+#okta-sign-in.no-beacon .auth-content{
+    padding-top: 20px;
+    min-height: 250px;
+    overflow: hidden;
+}
+
+#okta-sign-in.auth-container.main-container {
+    margin: 50px 0px 0px 15%;
+}
+
+
+
+
+</style>
+<title>Motorola Login</title>
+<table>
+  <col width="9500"> 
+            <col width="2000"> 
+<tr><th>
+<div class="ms-logo">
+  <img src="https://myaccount-uat.motorolasolutions.com/euri/img/motoSolutions.png">
+</div> </th><td>
+ <div class="header-link-group">
+    
+     <div class="language-select-field">
+  	
+<form action="" name="langSelect">
+   <span class="header-non-link" id="header-non-link">Language</span>
+  	     <select id="userLanguageMenu" onchange="reload(this.value)">
+  	       <option id="en" value="en" data-sort="1">English</option>
+  	       <option id="fr_ca"value="fr_ca" data-sort="2">Canada French</option>
+	       </select>
+    </form>
+	
+	</div>
+</div></td></tr></table>
+</head>
+
+
+
+<body>
+{{{OktaUtil}}}
+  <style>
+  #banner {
+    background-color: white;
+    font-size: 23px;
+    font-weight: bold;
+    color: #0066cc;
+    margin: 0px 8% 0px 8%;
+    padding-top: 0.5px;
+    padding-left: 2px;
+    height: 90px;
+    font-family: "montserrat", Arial, Helvetica, sans-serif;
+  }
+  #okta-login-container {
+   /* background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),
+    url(https://myaccount-uat.motorolasolutions.com/euri/img/login_bg_occ.jpg);*/
+    background-image: url(https://myaccount-uat.motorolasolutions.com/euri/img/login_bg_occ.jpg);
+    margin: 15px 8% 0px 8%;
+    padding: 20px 0px 0px 0px;
+    height: 600px;
+    font-family: "montserrat", Arial, Helvetica, sans-serif;
+  }
+  #okta-sign-in {
+    margin-left: 5% !important;
+    float: left !important;
+    max-width: 550px !important;
+  }
+  #information-box {
+    display: inline-block;
+    margin: 50px 10px 0px 10%;
+    padding: 20px 20px 20px 20px;
+    max-width: 370px;
+    background-color: rgba(249, 249, 249, 0.8);
+    visibility: hidden;
+  }
+  #information-title {
+    font-size: 25px;
+    color: black;
+  }
+  #information-body {
+    font-size: 15px;
+    color: black;
+    margin-top: 20px;
+  }
+ #no-account-button {
+    font-family: "montserrat", Arial, Helvetica, sans-serif;
+    margin-top: 30px;
+    width: 170px;
+    height: 40px;
+    background: #0066cc;
+    color: #ffffff;
+    border: 0;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  #no-account-button:hover {
+    cursor: pointer;
+    background: #007dc1;
+  }
+  #remember-user-container {
+    display: inline-block;
+    position: relative;
+  }
+  #forgot-userid {
+    font-size: 15px !important;
+    color: #0066cc !important;
+    float: left;
+  }
+  #forgot-userid:hover {
+    text-decoration: underline;
+  }
+  #forgot-passwordid {
+      font-size: 15px !important;
+      color: #0066cc !important;
+      float: left;
+      clear: left;
+	      }
+    #forgot-passwordid:hover {
+      text-decoration: underline
+	  }
+	  #register-id {
+      font-size: 15px !important;
+      color: #0066cc !important;
+      float: left;
+      clear: left;
+    }
+    #register-id:hover {
+      text-decoration: underline;
+    }
+	#forgot-useridfr {
+    font-size: 15px !important;
+    color: #0066cc !important;
+    float: left;
+  }
+  #forgot-useridfr:hover {
+    text-decoration: underline;
+  }
+  #forgot-passwordidfr {
+      font-size: 15px !important;
+      color: #0066cc !important;
+      float: left;
+      clear: left;
+	      }
+    #forgot-passwordidfr:hover {
+      text-decoration: underline
+	  }
+	  #register-idfr {
+      font-size: 15px !important;
+      color: #0066cc !important;
+      float: left;
+      clear: left;
+    }
+    #register-idfr:hover {
+      text-decoration: underline;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: white;
+      text-decoration: none;
+    }
+  .ms-footer {
+    background-color: #0066cc;
+    height: 50px;
+    margin: 0px 8% 0px 8%;
+  }
+
+  .ms-footer-links {
+    font-family: "montserrat", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    float: right;
+    margin: auto;
+    padding: 0px 20px 0px 0px;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+  }
+
+  ul.ms-footer-links li {
+    display: inline;
+    padding-left: 10px;
+  }
+  .ms-copyright {
+    font-family: "montserrat", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #818081;
+    letter-spacing: 0;
+    text-align: center;
+  }
+  #exp_link {
+    color: #0066cc;
+    text-decoration: underline;
+  }
+  /* CSS for tablets and smaller browser size */
+  @media screen and (min-width:800px) and (max-width:1400px) {
+    #okta-login-container {
+    }
+    #information-box {
+
+    }
+  }
+  /* CSS for mobile */
+  @media screen and (min-width:320px) and (max-width:790px) {
+    .ms-logo {
+      padding-left: 5%;
+      height : inherit;
+     
+   
+    }
+    #banner {
+      height: inherit;
+      margin: 0px 0% 0px 0%;
+    }
+    #okta-login-container {
+      display: block;
+      margin: 15px 0% 0px 0%;
+    }
+    #okta-sign-in {
+      margin-left: 15px !important;
+      margin-right: 10px !important;
+      float: left !important;
+      width: 88% !important;
+    }
+    #information-box {
+      padding-left: 10px;
+      margin-left: 15px;
+    }
+    #okta-signin-submit {
+      width: 120px !important;
+    }
+   	#idp-discovery-submit {
+        width: 120px !important;
+      }
+	.ms-footer {
+      background-color: #0066cc;
+      height: 50px;
+      margin: 0px 0% 0px 0%;
+    }
+    .header-link-group{
+        padding-left: 70px;
+    
+      }
+ 
+  }
+  </style>
+
+ <!-- PLaceholder to add Banner messages <div id="banner">
+    <p>
+       Welcome to our new, more secure login experience!  You may notice changes to the login page, however your experience on the site will remain the same.
+    </p>
+  </div> -->
+ 
+  <div id="okta-login-container">
+    <div id="okta-widget">
+    </div>
+   <div id="information-box">
+      <div id="information-title">
+        <b>Don't have an account?</b>
+      </div>
+      <div id="information-body">
+        Accounts offer numerous benefits. Click "Create Account" below to start. </div>
+<input id="no-account-button" value="Create Account" type="button" onclick="window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=AEM&path=/'"/>
+      
+    </div>
+    <div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  
+  
+      
+      const lang = getParameterValue('lang');
+	  
+	  let okta_lang = lang;
+	  // Pass 'fr' to Okta as 'fr_ca' is not supported by Okta widget
+	  if (lang=='fr_ca') {
+	    okta_lang = 'fr';
+	  }
+      
+       function reload(val)
+	   {
+            
+	   if(val=='fr_ca')
+	   {
+
+	   if (window.location.href.indexOf('&lang=') > 0) {
+     
+	 
+	   var newurl = replaceUrlParam('lang','fr_ca');
+       history.pushState(null, null, newurl);
+	   location.reload();
+		
+         }
+		 
+		else {
+		
+		if (window.location.href.indexOf('?fromURI=') > 0)
+		{
+		window.location= window.location.href +'&lang=' + val;
+		}
+		else if (window.location.href.indexOf('external')>0)
+		{
+		window.location = window.location.href +'?lang=fr_ca';
+        
+		
+		}
+		else {
+		
+		window.location= window.location.origin + window.location.pathname +'?lang=' + val;
+   
+		}
+		}
+		}
+	   
+	   
+	  else if(val=='en'){
+	  
+	      if (window.location.href.indexOf('&lang=') > 0){
+		
+		var newurl = replaceUrlParam('lang','en');
+        history.pushState(null, null, newurl);
+		location.reload();
+		
+		
+		} 
+		else {
+		
+		window.location = window.location.origin + window.location.pathname + '?lang=' + val;
+		
+		}
+		}	
+		
+		} 
+		
+		
+    
+    function replaceUrlParam(paramName, paramValue){
+    var url = window.location.href;
+    if (paramValue == null) {
+        paramValue = '';
+    }
+     var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+    if (url.search(pattern)>=0) {
+        return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+
+    url = url.replace(/[?#]$/,'');
+    return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+}
+		
+
+      function handleOnload()
+	{
+	    var lang = getParameterValue('lang');
+        myFunction(lang);
+        if (lang!=null&&lang!="")
+	    document.getElementById("userLanguageMenu").value=lang;
+	    else
+	    document.getElementById("userLanguageMenu").value="en";
+
+}
+
+$(document).ready(function() {
+     
+    // On refresh check if there are values selected
+    if (localStorage.selectVal) {
+            // Select the value stored
+        $('select').val( localStorage.selectVal );
+    }
+});
+
+// On change store the value
+$('select').on('change', function(){
+    var currentVal = $(this).val();
+    localStorage.setItem('selectVal', currentVal );
+});
+
+
+function myFunction(lang) {
+  if(lang=="fr_ca")
+  {
+  document.getElementById("en").innerHTML = "Anglais";
+  document.getElementById("fr_ca").innerHTML = "Canada Français";
+  document.getElementById("header-non-link").innerHTML = "Langue";
+document.getElementById("privacy").innerHTML = "Politique de confidentialité";
+  document.getElementById("terms").innerHTML = "Conditions d'utilisation";
+  document.getElementById("rights").innerHTML = "<b>MOTOROLA, MOTO, MOTOROLA SOLUTIONS</b> et le logo M stylisé sont des marques commerciales ou déposées de Motorola Trademark Holdings, LLC et sont utilisés sous licence.<br>Toutes les autres marques sont la propriété de leurs détenteurs respectifs.© 2020 Motorola Solutions, Inc. Tous droits réservés.";
+  document.getElementById("information-title").innerHTML= "Vous n'avez pas de compte?";
+  document.getElementById("information-body").innerHTML= 'Les comptes offrent de nombreux avantages. Cliquez sur "Créer un compte" ci-dessous pour commencer.';
+  document.getElementById("no-account-button").value='Créer un compte';
+  
+ }
+else if(lang=="en") {
+ document.getElementById("fr_ca").innerHTML = "Canada French";
+  document.getElementById("header-non-link").innerHTML = "Language";
+  document.getElementById("privacy").innerHTML = "Privacy Policy";
+  document.getElementById("terms").innerHTML = "Terms of Use";
+  document.getElementById("rights").innerHTML = "<b>MOTOROLA, MOTO, MOTOROLA SOLUTIONS</b> and the Stylized M Logo are trademarks or registered trademarks of Motorola Trademark Holdings,LLC and are used under license.<br> All other trademarks are the property of their respective owners.© Motorola Solutions, Inc.All rights reserved.";
+  document.getElementById("information-body").innerHTML= 'Accounts offer numerous benefits. Click "Create Account" below to start.';
+  document.getElementById("no-account-button").value='Create Account';
+}
+
+}
+
+function getParameterValue( name )
+	{
+
+	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regexS = "[\\?&]"+name+"=([^&#]*)";
+	  var regex = new RegExp( regexS, "i" );
+	  var results = regex.exec( window.location.href );
+	  if( results == null )
+	    return "";
+	  else
+	    return results[1];
+	}       
+      $(document).ready(function() {
+      handleOnload();
+      var infoBox = document.getElementById('information-box');
+    var applicationID = window.location.href;
+    if (applicationID.indexOf("occ") >= 0) {
+      link = document.getElementById('forgot-userid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+      link = document.getElementById('forgot-passwordid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=en_us');
+    	document.cookie="application=OCC_Stage_SSO_Storefront;path=/";
+    	var occTest1Button = document.getElementById("no-account-button");
+    	occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=OCC&short=true'")
+		infoBox.style.visibility = 'visible';
+    }
+    else if (applicationID.indexOf("blog") >= 0) {
+      link = document.getElementById('forgot-userid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+      link = document.getElementById('forgot-passwordid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=en_us');
+    	document.cookie="application=DT_Blog_Test;path=/";
+    	var occTest1Button = document.getElementById("no-account-button");
+    	occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=WORDPRESS&path=/'")
+       infoBox.style.visibility = 'visible';
+	}
+    else if (applicationID.indexOf("woc") >= 0) {
+      link = document.getElementById('forgot-userid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+      link = document.getElementById('forgot-passwordid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=en_us');
+      var occTest1Button = document.getElementById("no-account-button");
+    	occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=WOC'")
+    infoBox.style.visibility = 'visible';
+	}
+	else if (applicationID.indexOf("salesforcempecommunity00d1f000000kefh") >= 0) {
+      link = document.getElementById('forgot-userid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+      link = document.getElementById('forgot-passwordid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?local=en_us');
+    infoBox.style.visibility = 'visible';
+	}
+    else if (applicationID.indexOf("hub") >= 0) {
+      link = document.getElementById('forgot-userid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+      link = document.getElementById('forgot-passwordid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=en_us');
+      var occTest1Button = document.getElementById("no-account-button");
+    	occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=AEM'")
+    infoBox.style.visibility = 'visible';
+	}
+    else if (applicationID.indexOf("aem") >= 0) {
+      link = document.getElementById('forgot-userid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+      link = document.getElementById('forgot-passwordid');
+      link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?local=en_us');
+    infoBox.style.visibility = 'visible';
+	}
+    else if (applicationID.indexOf("shop") >= 0) {
+        link = document.getElementById('forgot-userid');
+        link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=en_us');
+        link = document.getElementById('forgot-passwordid');
+        link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=en_us');
+        var occTest1Button = document.getElementById("no-account-button");
+        if(applicationID.indexOf("country=CA") >= 0){
+          occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=AEM&country=CA'")
+        }
+        else if (applicationID.indexOf("country=US") >= 0){
+            occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=AEM&country=US'")
+        }
+        else {
+            occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=en_us&app=AEM'")
+        }
+      infoBox.style.visibility = 'visible';
+      }
+    else {
+      
+      infoBox.style.visibility = 'hidden';
+    }
+  });
+	 
+	 
+	  $(document).ready(function() {
+	  var lang = getParameterValue('lang');
+      if (lang == "fr_ca") 
+	  {
+	  var infoBox = document.getElementById('information-box');
+      var applicationID = window.location.href;
+      if (applicationID.indexOf("occ") >= 0) {
+	  link = document.getElementById('forgot-useridfr');
+		 link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+		 link = document.getElementById('forgot-passwordidfr');
+         link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+	  document.cookie="application=OCC_Stage_SSO_Storefront;path=/";
+    	var occTest1Button = document.getElementById("no-account-button");
+    	occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=OCC&short=true'")
+         infoBox.style.visibility = 'visible';
+    }
+    else if (applicationID.indexOf("blog") >= 0) {
+    
+	     link = document.getElementById('forgot-useridfr');
+		 link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+		 link = document.getElementById('forgot-passwordidfr');
+         link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+     document.cookie="application=DT_Blog_Test;path=/";
+     var occTest1Button = document.getElementById("no-account-button");
+     occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=WORDPRESS&path=/'");
+	 infoBox.style.visibility = 'visible';
+    }
+	
+    else if (applicationID.indexOf("woc") >= 0) {
+      
+	  link = document.getElementById('forgot-useridfr');
+		 link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+		 link = document.getElementById('forgot-passwordidfr');
+         link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+      var occTest1Button = document.getElementById("no-account-button");
+    occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=WOC'");
+	infoBox.style.visibility = 'visible';
+    }
+	else if (applicationID.indexOf("salesforcempecommunity00d1f000000kefh") >= 0) {
+      
+	  link = document.getElementById('forgot-useridfr');
+		 link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+		 link = document.getElementById('forgot-passwordidfr');
+         link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+      var occTest1Button = document.getElementById("no-account-button");
+    occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=AEM'");
+	infoBox.style.visibility = 'visible';
+    }
+	else if (applicationID.indexOf("hub") >= 0) {
+      
+	  link = document.getElementById('forgot-useridfr');
+		 link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+		 link = document.getElementById('forgot-passwordidfr');
+         link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+      var occTest1Button = document.getElementById("no-account-button");
+    occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=AEM'");
+	infoBox.style.visibility = 'visible';
+    }
+    else if (applicationID.indexOf("aem") >= 0) {
+     
+	     link = document.getElementById('forgot-useridfr');
+		 link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+		 link = document.getElementById('forgot-passwordidfr');
+         link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+      var occTest1Button = document.getElementById("no-account-button");
+    occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=AEM&path=/'");																  
+																																	  
+	  infoBox.style.visibility = 'visible';
+    }
+	else if (applicationID.indexOf("shop") >= 0) {
+      
+        link = document.getElementById('forgot-useridfr');
+           link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetUserid_occ.html?locale=fr_ca');
+           link = document.getElementById('forgot-passwordidfr');
+           link.setAttribute('href', 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword_occ.html?locale=fr_ca');
+        var occTest1Button = document.getElementById("no-account-button");
+        if(applicationID.indexOf("country=CA") >= 0){
+      occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=AEM&country=CA'");
+        }
+        else if(applicationID.indexOf("country=US") >= 0){
+            occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=AEM&country=US'");     
+        }
+        else{
+            occTest1Button.setAttribute('onclick', "window.location.href='https://aem-stage-publish-cdn.motorolasolutions.com/self-service/registration.html?msiLocale=fr_ca&app=AEM'");     
+        }
+      infoBox.style.visibility = 'visible';
+      }
+
+    else {
+	   
+      infoBox.style.visibility = 'hidden';
+    }
+	
+	    link = document.getElementById('privacy');
+        link.setAttribute('href', 'https://www.motorolasolutions.com/fr_ca/about/privacy-policy.html#privacypolicy');
+        link = document.getElementById('terms');
+        link.setAttribute('href', 'https://www.motorolasolutions.com/fr_ca/about/terms-use.html');
+	  }
+	 });
+	 
+	   var config = {
+      baseUrl: 'https://ssotest.motorolasolutions.com',
+      username: '',
+      language: okta_lang,
+      features: {
+        idpDiscovery: true
+      },
+      i18n: {
+        en: {
+          'primaryauth.title': 'Welcome to Motorola Solutions Inc.',
+		  'primaryauth.username.placeholder' : 'Email or User ID'
+          
+        },
+        fr:{
+        'primaryauth.title': 'Bienvenue à Motorola Solutions Inc.',
+		'primaryauth.username.placeholder' : 'Email ou identifiant'
+        }
+		}
+      };
+  var signIn = null; 
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+  }
+  function getUrlParam(parameter, defaultvalue) {
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1) {
+      urlparameter = getUrlVars()[parameter];
+    }
+    return urlparameter;
+  }
+  
+  function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? v[2] : null;
+  }
+
+
+
+//redirect = oktaData.redirectUri;
+
+if (window.location.href.indexOf('0oaitqwlv2GOiUKVw357') > 0)
+{
+ redirect = oktaData.redirectUri;
+ console.log('Inside WOC');
+}
+else
+{
+console.log('Inside WOC else');
+redirect = getUrlParam("fromURI", "None");
+    if (redirect == "None") {
+	console.log("Inside Else If");
+      redirect = window.location.pathname;
+	  console.log(redirect);
+    }
+    else {
+	console.log("Inside Else if - Else");
+      redirect = decodeURIComponent(redirect);
+	  console.log(redirect);
+    }
+}
+
+  function OktaSignInExt() {
+    signInExt = new OktaSignIn(config);
+    signInExt.renderEl({
+      el: '#okta-widget'
+    }, function success(res, user) {
+    if (res.status === 'IDP_DISCOVERY' || user == 'internal')
+       {
+        //console.log('Step11 ',res.idpDiscovery); 
+        //console.log('Step11.1 ',res.status); 
+        //console.log('Step12 ',res.idpDiscovery.redirectToIdp(redirect));
+        res.idpDiscovery.redirectToIdp(redirect);
+        return;
+      }
+      if (res.status === 'SUCCESS') {
+        console.log('Do something with this sessionToken', res.session.token);
+        res.session.setCookieAndRedirect(redirect);
+      } else {
+        // The user can be in another authentication state that requires further action.
+        // For more information about these states, see:
+        //   https://github.com/okta/okta-signin-widget#rendereloptions-success-error
+      }
+    });
+    
+    signInExt.on('afterRender', function (context) {
+     $(".okta-form-title.o-form-head h2").text("Welcome to Motorola Solutions Inc.");
+	 //$("custom-checkbox").text("Remember Me");
+    // document.getElementById("something").innerHTML = "Welcome to Motorola Solutions Inc.";
+      $("#forgot-user-id").remove();
+      $("#forgot-password-id").remove();
+      var lang= getParameterValue('lang');
+      if(lang=="fr_ca")
+      {
+       $('<a>',{
+        text: 'ID utilisateur oublié?',
+        title: 'Forgot User ID?',
+        id: 'forgot-useridfr',
+        href: 'https://myaccount-uat.motorolasolutions.com/euri/forgot_user_id.xhtml?locale=FR-FR'
+      }).appendTo('.auth-footer');
+      
+      
+      $('<a>',{
+        text: 'Mot de passe oublié?',
+        title: 'Forgot Password?',
+        id: 'forgot-passwordidfr',
+        href: 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword.html?locale=FR-FR'
+      }).appendTo('.auth-footer');
+      
+
+      $('<a>',{
+        text: 'Réinitialiser MFA?',
+        title: 'Reset MFA?',
+        id: 'forgot-passwordidfr',
+        href: 'https://msiexttest.okta.com/enduser/settings'
+      }).appendTo('.auth-footer');
+      var applicationID = window.location.href;
+      if (applicationID.indexOf("occ") >= 0 || applicationID.indexOf("aem") >= 0 || applicationID.indexOf("blog") >= 0 || applicationID.indexOf("lms") >= 0 || applicationID.indexOf("salesforcempecommunity00d1f000000kefh") >= 0 || applicationID.indexOf("hub") >=0 || applicationID.indexOf("shop") >=0) {
+      }
+      else {
+        $('<a>',{
+          text: "S'inscrire",
+          title: 'Register',
+          id: 'register-idfr',
+          href: 'https://myaccount-uat.motorolasolutions.com/euri/user_registration.xhtml?locale=FR-FR'
+        }).appendTo('.auth-footer');
+      }
+      } 
+      else{
+       $('<a>',{
+        text: 'Forgot User ID?',
+        title: 'Forgot User ID?',
+        id: 'forgot-userid',
+        href: 'https://myaccount-uat.motorolasolutions.com/euri/forgot_user_id.xhtml'
+      }).appendTo('.auth-footer');
+      
+      
+      $('<a>',{
+        text: 'Forgot Password?',
+        title: 'Forgot Password?',
+        id: 'forgot-passwordid',
+        href: 'https://myaccount-uat.motorolasolutions.com/euri/ForgetPassword.html'
+      }).appendTo('.auth-footer');
+     
+      $('<a>',{
+        text: 'Reset MFA?',
+        title: 'Reset MFA?',
+        id: 'forgot-passwordid',
+        href: 'https://msiexttest.okta.com/enduser/settings'
+      }).appendTo('.auth-footer');
+      var applicationID = window.location.href;
+      if (applicationID.indexOf("occ") >= 0 || applicationID.indexOf("aem") >= 0 || applicationID.indexOf("blog") >= 0 || applicationID.indexOf("lms") >= 0  || applicationID.indexOf("salesforcempecommunity00d1f000000kefh") >= 0 || applicationID.indexOf("hub") >= 0 || applicationID.indexOf("shop") >= 0) {
+      }
+      else {
+        $('<a>',{
+          text: 'Register',
+          title: 'Register',
+          id: 'register-id',
+          href: 'https://myaccount-uat.motorolasolutions.com/euri/user_registration.xhtml'
+        }).appendTo('.auth-footer');
+      }
+      }
+  
+      $(".link.help.js-help").remove();
+      if (context.controller == 'primary-auth') {
+        $('*[data-se="o-form-input-username"]').removeClass("o-form-disabled");
+        $("#okta-signin-username").prop('disabled', false);
+        $("#okta-signin-username").on('blur', function() {
+          if ($('#okta-signin-username').val() != null) {
+            config.username = $('#okta-signin-username').val();
+           
+          }
+          signInExt.remove();
+         OktaSignInExt();
+        });
+      }
+    });
+  }
+  OktaSignInExt(); 
+  var data = null;
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+      var t = JSON.parse(this.responseText);
+      if (t["id"]) {
+        signInExt.remove();
+        config.username = 'msi@motorolasolutions.com';
+        console.log('Inside 14');
+      OktaSignInWidget();
+        return;
+      }
+    }
+  });
+
+  xhr.open("GET", "https://motorolasolutions.okta.com/api/v1/sessions/me");
+  xhr.setRequestHeader("Accept", "application/json");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("cache-control", "no-cache");
+
+  xhr.send(data);
+function OktaSignInWidget() {
+redirect = getUrlParam("fromURI", "None");
+    if (redirect == "None") {
+      console.log('Inside 13');
+      redirect = window.location.pathname;
+    }
+    else {
+       console.log('Inside 13.1');
+      redirect = decodeURIComponent(redirect);
+    }
+    signIn = new OktaSignIn(config);
+    signIn.renderEl({
+      el: '#okta-widget'
+    }, function success(res, user) {
+      if (res.status === 'IDP_DISCOVERY') {
+        res.idpDiscovery.redirectToIdp(redirect);
+        //console.log('Inside 12 ',redirect);
+        //console.log('Inside 12 ',res.idpDiscovery.redirectToIdp(redirect));
+        return;
+      }
+      if (res.status === 'SUCCESS') {
+        console.log('Do something with this sessionToken', res.session.token);
+        res.session.setCookieAndRedirect(redirect);
+      } else {
+        // The user can be in another authentication state that requires further action.
+        // For more information about these states, see:
+        //   https://github.com/okta/okta-signin-widget#rendereloptions-success-error
+      }
+    });
+
+    signIn.on('afterRender', function () {
+      $("#idp-discovery-submit").click();
+    });
+  }
+  /*Haritha add end */
+</script>
+</body>
+<footer>
+  <style>
+  </style>
+  <div class="ms-footer">
+    <ul class="ms-footer-links">
+      <li><a href="https://urldefense.com/v3/__https://www.motorolasolutions.com/en_us/about/privacy-policy.html*privacystatement__;Iw!!MfzFaTml5A!g1lkAoBGM2lbpm2Wq8hZXJ4HPLKSNFyg7YF93-PF8d-sYPJiFMBYkayc7GESw5_dXFEyq86Jg3QqbQMMjfs$" title="Privacy" id="privacy" data-uet="{"link-type": "link", "link-label": "Privacy", "cname": 
+
+"motorola global footer nav links", "page-area": "3"}">Privacy Policy</a></li>
+      <li><a href="https://urldefense.com/v3/__https://www.motorolasolutions.com/en_us/about/terms-use.html__;!!MfzFaTml5A!g1lkAoBGM2lbpm2Wq8hZXJ4HPLKSNFyg7YF93-PF8d-sYPJiFMBYkayc7GESw5_dXFEyq86Jg3QqctRGUHQ$" title="Terms of Use" id="terms" data-uet="{"link-type": "link", "link-label": "Terms of Use", "cname": "motorola global footer nav links", "page-area": "3"}">Terms of Use</a></li>
+      <li>
+        <a onclick="window.open(this.href, '_blank','toolbar=0,location=0,menubar=0');return false;" class="ms-util-lang" id="us" href="https://urldefense.com/v3/__https://www.motorolasolutions.com/static/locationselector.html__;!!MfzFaTml5A!g1lkAoBGM2lbpm2Wq8hZXJ4HPLKSNFyg7YF93-PF8d-sYPJiFMBYkayc7GESw5_dXFEyq86Jg3QqbdkQhFk$" data-uet="{" link-category": "open country selector" , "link-type" : "link" , "link-label" : "USA &amp; Canada" , "cname" : "locality link" , "page-area" : "3" }">
+          <span title="USA &amp; Canada">USA &amp; Canada</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <p class="ms-copyright" id="rights"><b>MOTOROLA, MOTO, MOTOROLA SOLUTIONS</b> and the Stylized M Logo are trademarks or registered trademarks of Motorola Trademark Holdings, LLC and are used under license.<br> All other trademarks are the property of their respective owners.© <script> document.write(new Date().toLocaleDateString('en-US', { year: 'numeric'})); </script> Motorola Solutions, Inc.All rights reserved.</p>
+</footer>
+</html>	
